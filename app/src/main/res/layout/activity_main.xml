@@ -7,26 +7,28 @@
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/editTextLibelle"
-        android:hint="libelle"
+        android:id="@+id/productLabel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="label" />
 
     <EditText
-        android:id="@+id/editTextPU"
-        android:inputType="number"
-        android:hint="PU"
+        android:id="@+id/product_price"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="price"
+        android:inputType="number" />
 
     <Button
-        android:id="@+id/buttonSubmit"
-        android:text="Submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E91E63"
+        android:backgroundTint="#9F1645"
+        android:text="save" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewArticles"
+        android:id="@+id/productsList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>

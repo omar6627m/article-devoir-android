@@ -12,68 +12,52 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText editTextLibelle;
-    private EditText editTextPU;
-    private Button buttonSubmit;
-    private RecyclerView recyclerViewArticles;
-    private ArticleAdapter articleAdapter;
-    private ArticleDbHelper dbHelper;
+    private EditText product_label;
+    private EditText product_price;
+    private Button save_button;
+    private RecyclerView recyclerViewProducts;
+    private ProductAdapter productAdapter;
+    private ProductDbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editTextLibelle = findViewById(R.id.editTextLibelle);
-        editTextPU = findViewById(R.id.editTextPU);
-        buttonSubmit = findViewById(R.id.buttonSubmit);
-        recyclerViewArticles = findViewById(R.id.recyclerViewArticles);
+        product_label = findViewById(R.id.productLabel);
+        product_price = findViewById(R.id.product_price);
+        save_button = findViewById(R.id.saveButton);
+        recyclerViewProducts = findViewById(R.id.productsList);
+        dbHelper = new ProductDbHelper(this);
+        recyclerViewProducts.setLayoutManager(new LinearLayoutManager(this));
+        productAdapter = new ProductAdapter(new ArrayList<Product>());
+        recyclerViewProducts.setAdapter(productAdapter);
 
-        // Initialize your database helper
-        dbHelper = new ArticleDbHelper(this);
+        loadProducts();
 
-        // Set up the RecyclerView
-        recyclerViewArticles.setLayoutManager(new LinearLayoutManager(this));
-        articleAdapter = new ArticleAdapter(new ArrayList<Article>());
-        recyclerViewArticles.setAdapter(articleAdapter);
-
-        // Load existing articles
-        loadArticles();
-
-        // Set up the button click listener
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+        save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get the values from the input fields
-                String libelle = editTextLibelle.getText().toString();
-                String puString = editTextPU.getText().toString();
+                String label = product_label.getText().toString();
+                String priceString = product_price.getText().toString();
 
-                // Input validation
-                if(libelle.isEmpty() || puString.isEmpty()){
-                    Toast.makeText(MainActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                if(label.isEmpty() || priceString.isEmpty()){
+                    Toast.makeText(MainActivity.this, "values required", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                int pu = Integer.parseInt(priceString);
+                dbHelper.insertArticle(label, pu);
+                product_label.setText("");
+                product_price.setText("");
 
-                int pu = Integer.parseInt(puString);
-
-                // Insert the new article into the database
-                dbHelper.insertArticle(libelle, pu);
-
-                // Clear input fields
-                editTextLibelle.setText("");
-                editTextPU.setText("");
-
-                // Refresh the list of articles
-                loadArticles();
+                loadProducts();
             }
         });
     }
 
-    private void loadArticles() {
-        // Retrieve the list of articles from the database
-        ArrayList<Article> articles = (ArrayList<Article>) dbHelper.getAllArticles();
-        // Update the adapter with the new list
-        articleAdapter.updateArticles(articles);
+    private void loadProducts() {
+        ArrayList<Product> products = (ArrayList<Product>) dbHelper.getAllArticles();
+        productAdapter.updateArticles(products);
     }
 
     @Override

@@ -2,10 +2,8 @@ package com.example.myapplication;
 
 import android.provider.BaseColumns;
 
-public final class ArticleContract {
-    // To prevent someone from accidentally instantiating the contract class,
-    // make the constructor private.
-    private ArticleContract() {}
+public final class ProductContract {
+    private ProductContract() {}
 
     /* Inner class that defines the table contents */
     public static class ArticleEntry implements BaseColumns {

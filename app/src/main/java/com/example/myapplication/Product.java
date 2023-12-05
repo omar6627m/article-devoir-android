@@ -1,19 +1,15 @@
 package com.example.myapplication;
 
-public class Article {
+public class Product {
     private int id;
     private String libelle;
     private int pu;
 
-    public Article(int id, String libelle, int pu) {
+    public Product(int id, String libelle, int pu) {
         this.id = id;
         this.libelle = libelle;
         this.pu = pu;
     }
-
-    // Add getters and setters here
-
-
     public int getId() {
         return id;
     }
